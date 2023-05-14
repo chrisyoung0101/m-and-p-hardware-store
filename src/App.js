@@ -1,5 +1,7 @@
 import './App.css';
 import InventorySearch from './components/InventorySearch';
+import SalesSearch from './components/SalesSearch';
+import CombinedSearch from './components/CombinedSearch';
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       </div>
 
       <InventorySearch />
+      <SalesSearch />
+      <CombinedSearch />
     </>
   );
 }

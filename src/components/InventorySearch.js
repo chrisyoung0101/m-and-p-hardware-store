@@ -34,6 +34,7 @@ const StyledButton = styled.button`
 const InventorySearch = () => {
   const [searchId, setSearchId] = useState('');
   const [inventoryData, setInventoryData] = useState([]);
+  const [tableVisible, setTableVisible] = useState(false);
 
   const handleSearchById = async () => {
     try {
@@ -41,7 +42,7 @@ const InventorySearch = () => {
         `http://localhost:8080/inventory-items/${searchId}`
       );
       setInventoryData([response.data]);
-      console.log(response.data);
+      setTableVisible(true);
     } catch (error) {
       console.error(error);
     }
@@ -53,9 +54,14 @@ const InventorySearch = () => {
         `http://localhost:8080/inventory-items/`
       );
       setInventoryData(response.data);
+      setTableVisible(true);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const toggleTableVisibility = () => {
+    setTableVisible(!tableVisible);
   };
 
   return (
@@ -72,9 +78,14 @@ const InventorySearch = () => {
         <StyledButton onClick={handleGetAllInventory}>
           Get All Current Inventory
         </StyledButton>
+        {inventoryData.length > 0 && (
+          <StyledButton onClick={toggleTableVisibility}>
+            {tableVisible ? 'Hide Table' : 'Show Table'}
+          </StyledButton>
+        )}
       </StyledInputGroup>
 
-      {inventoryData.length > 0 && (
+      {tableVisible && inventoryData.length > 0 && (
         <Table
           data={inventoryData}
           columns={[
